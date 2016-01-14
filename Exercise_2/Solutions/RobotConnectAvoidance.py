@@ -7,7 +7,7 @@ Exercise 2
 
 import numpy as np
 import numpy.random as rn
-from IzNetwork import IzNetwork
+from Exercise_2.IzNetwork import IzNetwork
 
 
 def RobotConnectAvoidance(Ns, Nm):
@@ -65,11 +65,11 @@ def RobotConnectAvoidance(Ns, Nm):
   # s[i,j] is the streght of the connection from neuron j to neuron i
 
   # Connect 0 to 2 and 1 to 3 for seeking behaviour
-  net.layer[2].S[0]      = np.ones([Nm, Ns])
+  net.layer[2].S[0]      = 5*np.ones([Nm, Ns])
   net.layer[2].factor[0] = F
   net.layer[2].delay[0]  = D * np.ones([Nm, Ns], dtype=int)
 
-  net.layer[3].S[1]      = np.ones([Nm, Ns])
+  net.layer[3].S[1]      = 5*np.ones([Nm, Ns])
   net.layer[3].factor[1] = F
   net.layer[3].delay[1]  = D * np.ones([Nm, Ns], dtype=int)
 

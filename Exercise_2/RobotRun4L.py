@@ -9,13 +9,15 @@ long time --- if you get bored, press Ctrl+C a couple of times.
 (C) Murray Shanahan et al, 2015
 """
 
+import time
+
+import matplotlib.pyplot as plt
 import numpy as np
 import numpy.random as rn
-import matplotlib.pyplot as plt
+
 from Environment import Environment
 from RobotConnect4L import RobotConnect4L
 from RobotUpdate import RobotUpdate
-
 
 ## Create the environment
 print 'Initialising environment'
@@ -25,8 +27,8 @@ Env = Environment(15, 10, 20, xmax, ymax)
 
 ## Robot controller
 print 'Initialising Robot Controller'
-Ns = 4  # Sensor neurons. Try 1, 4, and 8
-Nm = 4  # Motor neurons. Try 1, 4, and 8
+Ns = 8  # Sensor neurons. Try 1, 4, and 8
+Nm = 8  # Motor neurons. Try 1, 4, and 8
 net  = RobotConnect4L(Ns, Nm)
 
 Dmax = 5      # Maximum synaptic delay
@@ -42,7 +44,7 @@ for lr in xrange(net.Nlayers):
   net.layer[lr].firings = np.array([])
 
 # Simulation parameters
-Tmax = 20000  # Simulation time in milliseconds
+Tmax = 10000  # Simulation time in milliseconds
 dt   = 100    # Robot step size in milliseconds
 
 # Initialise record of membrane potentials
@@ -142,6 +144,7 @@ for t in xrange(len(T)):
   x[t+1], y[t+1], w[t+1] = RobotUpdate(x[t], y[t], w[t], UL, UR,
                                        Umax, dt, xmax, ymax)
 
+
   ## PLOTTING
   # Plot membrane potential
   plt.figure(1)
@@ -173,9 +176,11 @@ for t in xrange(len(T)):
   plt.xlabel('Time (ms)')
 
   plt.draw()
+  plt.pause(.1)
 
   # Plot robot trajectory
   plt.figure(2)
   plt.scatter(x, y, marker='.')
   plt.draw()
-
+  plt.pause(.1)
+  time.sleep(0.1)

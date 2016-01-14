@@ -76,7 +76,7 @@ class QIFNetwork:
 
     # Update v using the QIF equations and Euler method
     for k in xrange(int(1/dt)):
-      v = self.layer[i].v
+      v = self.layer[i].v   #why is this initialised to a scalar not an array?
 
       self.layer[i].v += dt*(
           self.layer[i].a*(self.layer[i].vr - v)*(self.layer[i].vc - v) +
@@ -93,6 +93,8 @@ class QIFNetwork:
           else:
             self.layer[i].firings = np.array([[t, f]])
 
+
+          #?????????
           # Reset the membrane potential after spikes
           # Here's a little hack to see if vr is array or scalar
           if hasattr(self.layer[i].vr, "__len__"):

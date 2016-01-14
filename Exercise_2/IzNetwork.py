@@ -53,7 +53,7 @@ class IzNetwork:
 
     # Calculate current from incoming spikes
     for j in xrange(self.Nlayers):
-
+      #LAYER I IS CONNECTED TO LAYER J IF THERE EXISTS A CONNECTIVITY MATIX S[J] I.E LAYER J --> LAYER I
       # If layer[i].S[j] exists then layer[i].factor[j] and
       # layer[i].delay[j] have to exist
       if j in self.layer[i].S:
@@ -70,8 +70,9 @@ class IzNetwork:
         # Sum current from incoming spikes
         k = len(firings)
         while k > 0 and (firings[k-1, 0] > (t - self.Dmax)):
-          idx = delay[:, firings[k-1, 1]] == (t-firings[k-1, 0])
-          self.layer[i].I[idx] += F * S[idx, firings[k-1, 1]]
+          idx = delay[:, firings[k-1, 1]] == (t-firings[k-1, 0]) #which reveiving neurons have been waiting long enough as all elements of delay are the same, all idx will be true or false
+          self.layer[i].I[idx] += F * S[idx, firings[k-1, 1]]  #firings[k-1,1] is the index of neuron that has fired,
+          # idx the reveiving neurons which have been waiting long enough
           k = k-1
 
     # Update v and u using the Izhikevich model and Euler method
@@ -83,7 +84,7 @@ class IzNetwork:
       self.layer[i].u += dt*(self.layer[i].a*(self.layer[i].b*v - u))
 
       # Find index of neurons that have fired this millisecond
-      fired = np.where(self.layer[i].v >= 30)[0]
+      fired = np.where(self.layer[i].v >= 30)[0] #gives the index of the fired neurons i.e the column of the array
 
       if len(fired) > 0:
         for f in fired:

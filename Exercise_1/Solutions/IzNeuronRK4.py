@@ -73,7 +73,6 @@ for t in range(len(T)-1):
     s[t+1, 0] = c   # Reset to resting potential
     s[t+1, 1] += d  # Update recovery variable
 
-
 v = s[:, 0]
 u = s[:, 1]
 
